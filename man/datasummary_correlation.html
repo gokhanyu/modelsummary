@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>datasummary_correlation – modelsummary: Data and Model Summaries in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../man/fmt_decimal.html" rel="next">
+<link href="../man/datasummary_crosstab.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">modelsummary: Data and Model Summaries in R</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../vignettes/get_started.html" aria-current="page"> 
+<span class="menu-text">Get started</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vincentarelbundock/modelsummary/"> <i class="bi bi-github" role="img" aria-label="modelsummary GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../man/modelsummary.html">Functions</a></li><li class="breadcrumb-item"><a href="../man/datasummary_correlation.html"><code>datasummary_correlation</code></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/get_started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Getting started</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/datasummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Summaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/modelsummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Summaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/modelplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Plots</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/modelsummary_extension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extension and Customization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/appearance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Themes and Styles</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/modelsummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>modelsummary</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/modelplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>modelplot</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/datasummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>datasummary</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/datasummary_skim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>datasummary_skim</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/datasummary_balance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>datsummary_balance</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/datasummary_crosstab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>datasummary_crosstab</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/datasummary_correlation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><code>datasummary_correlation</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Formatting</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/fmt_decimal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>fmt_decimal</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/fmt_equivalence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>fmt_equivalence</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/fmt_sci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>fmt_sci</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/fmt_significant.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>fmt_significant</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/fmt_sprintf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>fmt_sprintf</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/fmt_statistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>fmt_statistic</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/fmt_term.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>fmt_term</code></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Utilities</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/get_estimates.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>get_estimates</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/get_gof.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>get_gof</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/coef_rename.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>coef_rename</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/dvnames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>dvnames</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/gof_map.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>gof_map</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/datasummary_correlation_format.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>datasummary_correlation_format</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/config_modelsummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>config_modelsummary</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/update_modelsummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>update_modelsummary</code></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../NEWS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">News</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../LICENSE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">License</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../CITATION.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Citation</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#generate-a-correlation-table-for-all-numeric-variables-in-your-dataset." id="toc-generate-a-correlation-table-for-all-numeric-variables-in-your-dataset." class="nav-link active" data-scroll-target="#generate-a-correlation-table-for-all-numeric-variables-in-your-dataset.">Generate a correlation table for all numeric variables in your dataset.</a>
+  <ul class="collapse">
+  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
+  <li><a href="#global-options" id="toc-global-options" class="nav-link" data-scroll-target="#global-options">Global Options</a></li>
+  <li><a href="#latex-preamble" id="toc-latex-preamble" class="nav-link" data-scroll-target="#latex-preamble">LaTeX preamble</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="generate-a-correlation-table-for-all-numeric-variables-in-your-dataset." class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="generate-a-correlation-table-for-all-numeric-variables-in-your-dataset.">Generate a correlation table for all numeric variables in your dataset.</h2>
+<section id="description" class="level3">
+<h3 class="anchored" data-anchor-id="description">Description</h3>
+<p>The names of the variables displayed in the correlation table are the names of the columns in the <code>data</code>. You can rename those columns (with or without spaces) to produce a table of human-readable variables. See the Details and Examples sections below, and the vignettes on the <code>modelsummary</code> website:</p>
+<ul>
+<li>
+<p>https://modelsummary.com/</p>
+</li>
+<li>
+<p>https://modelsummary.com/articles/datasummary.html</p>
+</li>
+</ul>
+</section>
+<section id="usage" class="level3">
+<h3 class="anchored" data-anchor-id="usage">Usage</h3>
+<pre><code class="language-R">datasummary_correlation(
+  data,
+  output = "default",
+  method = "pearson",
+  fmt = 2,
+  align = NULL,
+  add_rows = NULL,
+  add_columns = NULL,
+  title = NULL,
+  notes = NULL,
+  escape = TRUE,
+  stars = FALSE,
+  ...
+)
+</code></pre>
+</section>
+<section id="arguments" class="level3">
+<h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
+<table>
+<tbody><tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="data">data</code>
+</td>
+<td>
+A data.frame (or tibble)
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="output">output</code>
+</td>
+<td>
+<p>filename or object type (character string)</p>
+<ul>
+<li>
+<p>Supported filename extensions: .docx, .html, .tex, .md, .txt, .csv, .xlsx, .png, .jpg</p>
+</li>
+<li>
+<p>Supported object types: "default", "html", "markdown", "latex", "latex_tabular", "typst", "data.frame", "tinytable", "gt", "kableExtra", "huxtable", "flextable", "DT", "jupyter". The "modelsummary_list" value produces a lightweight object which can be saved and fed back to the <code>modelsummary</code> function.</p>
+</li>
+<li>
+<p>The "default" output format can be set to "tinytable", "kableExtra", "gt", "flextable", "huxtable", "DT", or "markdown"</p>
+<ul>
+<li>
+<p>If the user does not choose a default value, the packages listed above are tried in sequence.</p>
+</li>
+<li>
+<p>Session-specific configuration: <code>options(“modelsummary_factory_default” = “gt”)</code></p>
+</li>
+<li>
+<p>Persistent configuration: <code>config_modelsummary(output = “markdown”)</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Warning: Users should not supply a file name to the <code>output</code> argument if they intend to customize the table with external packages. See the ‘Details’ section.</p>
+</li>
+<li>
+<p>LaTeX compilation requires the <code>booktabs</code> and <code>siunitx</code> packages, but <code>siunitx</code> can be disabled or replaced with global options. See the ‘Details’ section.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="method">method</code>
+</td>
+<td>
+<p>character or function</p>
+<ul>
+<li>
+<p>character: "pearson", "kendall", "spearman", or "pearspear" (Pearson correlations above and Spearman correlations below the diagonal)</p>
+</li>
+<li>
+<p>function: takes a data.frame with numeric columns and returns a square matrix or data.frame with unique row.names and colnames corresponding to variable names. Note that the <code>datasummary_correlation_format</code> can often be useful for formatting the output of custom correlation functions.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="fmt">fmt</code>
+</td>
+<td>
+<p>how to format numeric values: integer, user-supplied function, or <code>modelsummary</code> function.</p>
+<ul>
+<li>
+<p>Integer: Number of decimal digits</p>
+</li>
+<li>
+<p>User-supplied functions:</p>
+<ul>
+<li>
+<p>Any function which accepts a numeric vector and returns a character vector of the same length.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>modelsummary</code> functions:</p>
+<ul>
+<li>
+<p><code>fmt = fmt_significant(2)</code>: Two significant digits (at the term-level)</p>
+</li>
+<li>
+<p><code>fmt = fmt_sprintf(“%.3f”)</code>: See <code>?sprintf</code></p>
+</li>
+<li>
+<p><code>fmt = fmt_identity()</code>: unformatted raw values</p>
+</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="align">align</code>
+</td>
+<td>
+<p>A string with a number of characters equal to the number of columns in the table (e.g., <code>align = “lcc”</code>). Valid characters: l, c, r, d.</p>
+<ul>
+<li>
+<p>"l": left-aligned column</p>
+</li>
+<li>
+<p>"c": centered column</p>
+</li>
+<li>
+<p>"r": right-aligned column</p>
+</li>
+<li>
+<p>"d": dot-aligned column. For LaTeX/PDF output, this option requires at least version 3.0.25 of the siunitx LaTeX package. See the LaTeX preamble help section below for commands to insert in your LaTeX preamble.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="add_rows">add_rows</code>
+</td>
+<td>
+a data.frame (or tibble) with the same number of columns as your main table. By default, rows are appended to the bottom of the table. You can define a "position" attribute of integers to set the row positions. See Examples section below.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="add_columns">add_columns</code>
+</td>
+<td>
+a data.frame (or tibble) with the same number of rows as your main table.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="title">title</code>
+</td>
+<td>
+string. Cross-reference labels should be added with Quarto or Rmarkdown chunk options when applicable. When saving standalone LaTeX files, users can add a label such as <code style="white-space: pre;">\label{tab:mytable}</code> directly to the title string, while also specifying <code>escape=FALSE</code>.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="notes">notes</code>
+</td>
+<td>
+list or vector of notes to append to the bottom of the table.
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="escape">escape</code>
+</td>
+<td>
+boolean TRUE escapes or substitutes LaTeX/HTML characters which could prevent the file from compiling/displaying. <code>TRUE</code> escapes all cells, captions, and notes. Users can have more fine-grained control by setting <code>escape=FALSE</code> and using an external command such as: <code>modelsummary(model, “latex”) |&gt; tinytable::format_tt(tab, j=1:5, escape=TRUE)</code>
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="stars">stars</code>
+</td>
+<td>
+<p>to indicate statistical significance</p>
+<ul>
+<li>
+<p>FALSE (default): no significance stars.</p>
+</li>
+<li>
+<p>TRUE: <code>c(“+” = .1, “<em>” = .05, ”<strong>” = .01, ”</strong></em>” = 0.001)</code></p>
+</li>
+<li>
+<p>Named numeric vector for custom stars such as <code>c(’*’ = .1, ‘+’ = .05)</code></p>
+</li>
+<li>
+<p>Note: a legend will not be inserted at the bottom of the table when the <code>estimate</code> or <code>statistic</code> arguments use "glue strings" with <code>{stars}</code>.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td style="white-space: nowrap; font-family: monospace; vertical-align: top">
+<code id="...">…</code>
+</td>
+<td>
+other parameters are passed through to the table-making packages.
+</td>
+</tr>
+</tbody></table>
+</section>
+<section id="global-options" class="level3">
+<h3 class="anchored" data-anchor-id="global-options">Global Options</h3>
+<p>The behavior of <code>modelsummary</code> can be modified by setting global options. For example:</p>
+<ul>
+<li>
+<p><code>options(modelsummary_model_labels = “roman”)</code></p>
+</li>
+</ul>
+<p>The rest of this section describes each of the options above.</p>
+<h4 class="anchored">
+Model labels: default column names
+</h4>
+<p>These global option changes the style of the default column headers:</p>
+<ul>
+<li>
+<p><code>options(modelsummary_model_labels = “roman”)</code></p>
+</li>
+<li>
+<p><code>options(modelsummary_panel_labels = “roman”)</code></p>
+</li>
+</ul>
+<p>The supported styles are: "model", "panel", "arabic", "letters", "roman", "(arabic)", "(letters)", "(roman)"</p>
+<p>The panel-specific option is only used when <code>shape=“rbind”</code></p>
+<h4 class="anchored">
+Table-making packages
+</h4>
+<p><code>modelsummary</code> supports 6 table-making packages: <code>tinytable</code>, <code>kableExtra</code>, <code>gt</code>, <code>flextable</code>, <code>huxtable</code>, and <code>DT</code>. Some of these packages have overlapping functionalities. To change the default backend used for a specific file format, you can use ’ the <code>options</code> function:</p>
+<p><code>options(modelsummary_factory_html = ‘kableExtra’)</code> <code>options(modelsummary_factory_word = ‘huxtable’)</code> <code>options(modelsummary_factory_png = ‘gt’)</code> <code>options(modelsummary_factory_latex = ‘gt’)</code> <code>options(modelsummary_factory_latex_tabular = ‘kableExtra’)</code></p>
+<h4 class="anchored">
+Table themes
+</h4>
+<p>Change the look of tables in an automated and replicable way, using the <code>modelsummary</code> theming functionality. See the vignette: https://modelsummary.com/articles/appearance.html</p>
+<ul>
+<li>
+<p><code>modelsummary_theme_gt</code></p>
+</li>
+<li>
+<p><code>modelsummary_theme_kableExtra</code></p>
+</li>
+<li>
+<p><code>modelsummary_theme_huxtable</code></p>
+</li>
+<li>
+<p><code>modelsummary_theme_flextable</code></p>
+</li>
+<li>
+<p><code>modelsummary_theme_dataframe</code></p>
+</li>
+</ul>
+<h4 class="anchored">
+Model extraction functions
+</h4>
+<p><code>modelsummary</code> can use two sets of packages to extract information from statistical models: the <code>easystats</code> family (<code>performance</code> and <code>parameters</code>) and <code>broom</code>. By default, it uses <code>easystats</code> first and then falls back on <code>broom</code> in case of failure. You can change the order of priorities or include goodness-of-fit extracted by <em>both</em> packages by setting:</p>
+<p><code>options(modelsummary_get = “easystats”)</code></p>
+<p><code>options(modelsummary_get = “broom”)</code></p>
+<p><code>options(modelsummary_get = “all”)</code></p>
+<h4 class="anchored">
+Formatting numeric entries
+</h4>
+<p>By default, LaTeX tables enclose all numeric entries in the <code style="white-space: pre;"></code> command from the siunitx package. To prevent this behavior, or to enclose numbers in dollar signs (for LaTeX math mode), users can call:</p>
+<p><code>options(modelsummary_format_numeric_latex = “plain”)</code></p>
+<p><code>options(modelsummary_format_numeric_latex = “mathmode”)</code></p>
+<p>A similar option can be used to display numerical entries using MathJax in HTML tables:</p>
+<p><code>options(modelsummary_format_numeric_html = “mathjax”)</code></p>
+</section>
+<section id="latex-preamble" class="level3">
+<h3 class="anchored" data-anchor-id="latex-preamble">LaTeX preamble</h3>
+<p>When creating LaTeX via the <code>tinytable</code> backend (default in version 2.0.0 and later), it is useful to include the following commands in the LaTeX preamble of your documents. Note that they are added automatically when compiling Rmarkdown or Quarto documents (except when the <code>modelsummary()</code> calls are cached).</p>
+<div class="sourceCode latex">
+<pre>\usepackage{tabularray}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem}
+\UseTblrLibrary{booktabs}
+\UseTblrLibrary{siunitx}
+\newcommand{\tinytableTabularrayUnderline}[1]{\underline{#1}}
+\newcommand{\tinytableTabularrayStrikeout}[1]{\sout{#1}}
+\NewTableCommand{\tinytableDefineColor}[3]{\definecolor{#1}{#2}{#3}}
+</pre>
+</div>
+</section>
+<section id="examples" class="level3">
+<h3 class="anchored" data-anchor-id="examples">Examples</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"modelsummary"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># clean variable names (base R)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> mtcars[, <span class="fu">c</span>(<span class="st">"mpg"</span>, <span class="st">"hp"</span>)]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Miles / Gallon"</span>, <span class="st">"Horse Power"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_correlation</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_769sc9l2ykwh2j5n5y60(i, j, css_id) {
+        var table = document.getElementById("tinytable_769sc9l2ykwh2j5n5y60");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_769sc9l2ykwh2j5n5y60');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_769sc9l2ykwh2j5n5y60(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_769sc9l2ykwh2j5n5y60");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_769sc9l2ykwh2j5n5y60(0, 0, 'tinytable_css_id5ro5ioy2kvp1jssiw077') })
+window.addEventListener('load', function () { styleCell_769sc9l2ykwh2j5n5y60(0, 1, 'tinytable_css_id5sbu2zwr2yifvp2tfoph') })
+window.addEventListener('load', function () { styleCell_769sc9l2ykwh2j5n5y60(0, 2, 'tinytable_css_id5sbu2zwr2yifvp2tfoph') })
+window.addEventListener('load', function () { styleCell_769sc9l2ykwh2j5n5y60(1, 0, 'tinytable_css_idad0rlhwws51r8kiennh3') })
+window.addEventListener('load', function () { styleCell_769sc9l2ykwh2j5n5y60(1, 1, 'tinytable_css_idtkgt00o6zfuxpoyzop9y') })
+window.addEventListener('load', function () { styleCell_769sc9l2ykwh2j5n5y60(1, 2, 'tinytable_css_idtkgt00o6zfuxpoyzop9y') })
+window.addEventListener('load', function () { styleCell_769sc9l2ykwh2j5n5y60(2, 0, 'tinytable_css_idad0rlhwws51r8kiennh3') })
+window.addEventListener('load', function () { styleCell_769sc9l2ykwh2j5n5y60(2, 1, 'tinytable_css_idtkgt00o6zfuxpoyzop9y') })
+window.addEventListener('load', function () { styleCell_769sc9l2ykwh2j5n5y60(2, 2, 'tinytable_css_idtkgt00o6zfuxpoyzop9y') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_id5ro5ioy2kvp1jssiw077, .table th.tinytable_css_id5ro5ioy2kvp1jssiw077 {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_id5sbu2zwr2yifvp2tfoph, .table th.tinytable_css_id5sbu2zwr2yifvp2tfoph {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idad0rlhwws51r8kiennh3, .table th.tinytable_css_idad0rlhwws51r8kiennh3 {  text-align: left; }
+    .table td.tinytable_css_idtkgt00o6zfuxpoyzop9y, .table th.tinytable_css_idtkgt00o6zfuxpoyzop9y {  text-align: right; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_769sc9l2ykwh2j5n5y60" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">Miles / Gallon</th>
+                <th scope="col">Horse Power</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>Miles / Gallon</td>
+                  <td>1   </td>
+                  <td>.</td>
+                </tr>
+                <tr>
+                  <td>Horse Power   </td>
+                  <td>-.78</td>
+                  <td>1</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clean variable names (tidyverse)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Miles / Gallon</span><span class="st">`</span> <span class="ot">=</span> mpg,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Horse Power</span><span class="st">`</span> <span class="ot">=</span> hp)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_correlation</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_0xmw41b8dyhs00jfpm6f(i, j, css_id) {
+        var table = document.getElementById("tinytable_0xmw41b8dyhs00jfpm6f");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_0xmw41b8dyhs00jfpm6f');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_0xmw41b8dyhs00jfpm6f(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_0xmw41b8dyhs00jfpm6f");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_0xmw41b8dyhs00jfpm6f(0, 0, 'tinytable_css_idm9boowfr9j5zwzndn4p6') })
+window.addEventListener('load', function () { styleCell_0xmw41b8dyhs00jfpm6f(0, 1, 'tinytable_css_id1cc2c2dc00ogu96unqjc') })
+window.addEventListener('load', function () { styleCell_0xmw41b8dyhs00jfpm6f(0, 2, 'tinytable_css_id1cc2c2dc00ogu96unqjc') })
+window.addEventListener('load', function () { styleCell_0xmw41b8dyhs00jfpm6f(1, 0, 'tinytable_css_idn0bv408exfoln3q8mlwj') })
+window.addEventListener('load', function () { styleCell_0xmw41b8dyhs00jfpm6f(1, 1, 'tinytable_css_idvvtvrhktcww6zbqo8veh') })
+window.addEventListener('load', function () { styleCell_0xmw41b8dyhs00jfpm6f(1, 2, 'tinytable_css_idvvtvrhktcww6zbqo8veh') })
+window.addEventListener('load', function () { styleCell_0xmw41b8dyhs00jfpm6f(2, 0, 'tinytable_css_idn0bv408exfoln3q8mlwj') })
+window.addEventListener('load', function () { styleCell_0xmw41b8dyhs00jfpm6f(2, 1, 'tinytable_css_idvvtvrhktcww6zbqo8veh') })
+window.addEventListener('load', function () { styleCell_0xmw41b8dyhs00jfpm6f(2, 2, 'tinytable_css_idvvtvrhktcww6zbqo8veh') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_idm9boowfr9j5zwzndn4p6, .table th.tinytable_css_idm9boowfr9j5zwzndn4p6 {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_id1cc2c2dc00ogu96unqjc, .table th.tinytable_css_id1cc2c2dc00ogu96unqjc {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idn0bv408exfoln3q8mlwj, .table th.tinytable_css_idn0bv408exfoln3q8mlwj {  text-align: left; }
+    .table td.tinytable_css_idvvtvrhktcww6zbqo8veh, .table th.tinytable_css_idvvtvrhktcww6zbqo8veh {  text-align: right; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_0xmw41b8dyhs00jfpm6f" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">Miles / Gallon</th>
+                <th scope="col">Horse Power</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>Miles / Gallon</td>
+                  <td>1   </td>
+                  <td>.</td>
+                </tr>
+                <tr>
+                  <td>Horse Power   </td>
+                  <td>-.78</td>
+                  <td>1</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `correlation` package objects</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">requireNamespace</span>(<span class="st">"correlation"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  co <span class="ot">&lt;-</span> correlation<span class="sc">::</span><span class="fu">correlation</span>(mtcars[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datasummary_correlation</span>(co)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add stars to easycorrelation objects</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datasummary_correlation</span>(co, <span class="at">stars =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_by39h07jnd3hvnshgj4n(i, j, css_id) {
+        var table = document.getElementById("tinytable_by39h07jnd3hvnshgj4n");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_by39h07jnd3hvnshgj4n');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_by39h07jnd3hvnshgj4n(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_by39h07jnd3hvnshgj4n");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(0, 0, 'tinytable_css_idhzuyvu23cm6ddj56eupz') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(0, 1, 'tinytable_css_idrbyfnmxvn4tu7k9x0y10') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(0, 2, 'tinytable_css_idrbyfnmxvn4tu7k9x0y10') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(0, 3, 'tinytable_css_idrbyfnmxvn4tu7k9x0y10') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(0, 4, 'tinytable_css_idrbyfnmxvn4tu7k9x0y10') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(1, 0, 'tinytable_css_idd2w3fvlosec0lr17noue') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(1, 1, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(1, 2, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(1, 3, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(1, 4, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(2, 0, 'tinytable_css_idd2w3fvlosec0lr17noue') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(2, 1, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(2, 2, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(2, 3, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(2, 4, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(3, 0, 'tinytable_css_idd2w3fvlosec0lr17noue') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(3, 1, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(3, 2, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(3, 3, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(3, 4, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(4, 0, 'tinytable_css_idd2w3fvlosec0lr17noue') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(4, 1, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(4, 2, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(4, 3, 'tinytable_css_idvq62579wvknuruyullhf') })
+window.addEventListener('load', function () { styleCell_by39h07jnd3hvnshgj4n(4, 4, 'tinytable_css_idvq62579wvknuruyullhf') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_idhzuyvu23cm6ddj56eupz, .table th.tinytable_css_idhzuyvu23cm6ddj56eupz {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idrbyfnmxvn4tu7k9x0y10, .table th.tinytable_css_idrbyfnmxvn4tu7k9x0y10 {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idd2w3fvlosec0lr17noue, .table th.tinytable_css_idd2w3fvlosec0lr17noue {  text-align: left; }
+    .table td.tinytable_css_idvq62579wvknuruyullhf, .table th.tinytable_css_idvq62579wvknuruyullhf {  text-align: right; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_by39h07jnd3hvnshgj4n" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">mpg</th>
+                <th scope="col">cyl</th>
+                <th scope="col">disp</th>
+                <th scope="col">hp</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>mpg </td>
+                  <td>1      </td>
+                  <td>.     </td>
+                  <td>.     </td>
+                  <td>.</td>
+                </tr>
+                <tr>
+                  <td>cyl </td>
+                  <td>-.85***</td>
+                  <td>1     </td>
+                  <td>.     </td>
+                  <td>.</td>
+                </tr>
+                <tr>
+                  <td>disp</td>
+                  <td>-.85***</td>
+                  <td>.90***</td>
+                  <td>1     </td>
+                  <td>.</td>
+                </tr>
+                <tr>
+                  <td>hp  </td>
+                  <td>-.78***</td>
+                  <td>.83***</td>
+                  <td>.79***</td>
+                  <td>1</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative methods</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_correlation</span>(dat, <span class="at">method =</span> <span class="st">"pearspear"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_7m8sg6895ke7dmtue8qs(i, j, css_id) {
+        var table = document.getElementById("tinytable_7m8sg6895ke7dmtue8qs");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_7m8sg6895ke7dmtue8qs');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_7m8sg6895ke7dmtue8qs(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_7m8sg6895ke7dmtue8qs");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_7m8sg6895ke7dmtue8qs(0, 0, 'tinytable_css_idwg1z1i30x8u9d8yhkph1') })
+window.addEventListener('load', function () { styleCell_7m8sg6895ke7dmtue8qs(0, 1, 'tinytable_css_idie65ypo5u92whbz8oy7s') })
+window.addEventListener('load', function () { styleCell_7m8sg6895ke7dmtue8qs(0, 2, 'tinytable_css_idie65ypo5u92whbz8oy7s') })
+window.addEventListener('load', function () { styleCell_7m8sg6895ke7dmtue8qs(1, 0, 'tinytable_css_id1vs25iyg6nrlm64jhzyw') })
+window.addEventListener('load', function () { styleCell_7m8sg6895ke7dmtue8qs(1, 1, 'tinytable_css_idj85510zxx1oklx7n16ke') })
+window.addEventListener('load', function () { styleCell_7m8sg6895ke7dmtue8qs(1, 2, 'tinytable_css_idj85510zxx1oklx7n16ke') })
+window.addEventListener('load', function () { styleCell_7m8sg6895ke7dmtue8qs(2, 0, 'tinytable_css_id1vs25iyg6nrlm64jhzyw') })
+window.addEventListener('load', function () { styleCell_7m8sg6895ke7dmtue8qs(2, 1, 'tinytable_css_idj85510zxx1oklx7n16ke') })
+window.addEventListener('load', function () { styleCell_7m8sg6895ke7dmtue8qs(2, 2, 'tinytable_css_idj85510zxx1oklx7n16ke') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_idwg1z1i30x8u9d8yhkph1, .table th.tinytable_css_idwg1z1i30x8u9d8yhkph1 {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idie65ypo5u92whbz8oy7s, .table th.tinytable_css_idie65ypo5u92whbz8oy7s {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_id1vs25iyg6nrlm64jhzyw, .table th.tinytable_css_id1vs25iyg6nrlm64jhzyw {  text-align: left; }
+    .table td.tinytable_css_idj85510zxx1oklx7n16ke, .table th.tinytable_css_idj85510zxx1oklx7n16ke {  text-align: right; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_7m8sg6895ke7dmtue8qs" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">Miles / Gallon</th>
+                <th scope="col">Horse Power</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>Miles / Gallon</td>
+                  <td>1   </td>
+                  <td>-.78</td>
+                </tr>
+                <tr>
+                  <td>Horse Power   </td>
+                  <td>-.89</td>
+                  <td>1   </td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># custom function</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cor_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">cor</span>(x, <span class="at">method =</span> <span class="st">"kendall"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_correlation</span>(dat, <span class="at">method =</span> cor_fun)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_1qoyosuzddnx248kb59a(i, j, css_id) {
+        var table = document.getElementById("tinytable_1qoyosuzddnx248kb59a");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_1qoyosuzddnx248kb59a');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_1qoyosuzddnx248kb59a(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_1qoyosuzddnx248kb59a");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_1qoyosuzddnx248kb59a(0, 0, 'tinytable_css_id49x7o27tgdm5b65nldpf') })
+window.addEventListener('load', function () { styleCell_1qoyosuzddnx248kb59a(0, 1, 'tinytable_css_idzxzxncaixm7ax26a1vag') })
+window.addEventListener('load', function () { styleCell_1qoyosuzddnx248kb59a(0, 2, 'tinytable_css_idzxzxncaixm7ax26a1vag') })
+window.addEventListener('load', function () { styleCell_1qoyosuzddnx248kb59a(1, 0, 'tinytable_css_ido9ivrrzkd8aebweq63mt') })
+window.addEventListener('load', function () { styleCell_1qoyosuzddnx248kb59a(1, 1, 'tinytable_css_idap13oxj4hnskrjc3fn9p') })
+window.addEventListener('load', function () { styleCell_1qoyosuzddnx248kb59a(1, 2, 'tinytable_css_idap13oxj4hnskrjc3fn9p') })
+window.addEventListener('load', function () { styleCell_1qoyosuzddnx248kb59a(2, 0, 'tinytable_css_ido9ivrrzkd8aebweq63mt') })
+window.addEventListener('load', function () { styleCell_1qoyosuzddnx248kb59a(2, 1, 'tinytable_css_idap13oxj4hnskrjc3fn9p') })
+window.addEventListener('load', function () { styleCell_1qoyosuzddnx248kb59a(2, 2, 'tinytable_css_idap13oxj4hnskrjc3fn9p') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_id49x7o27tgdm5b65nldpf, .table th.tinytable_css_id49x7o27tgdm5b65nldpf {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idzxzxncaixm7ax26a1vag, .table th.tinytable_css_idzxzxncaixm7ax26a1vag {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_ido9ivrrzkd8aebweq63mt, .table th.tinytable_css_ido9ivrrzkd8aebweq63mt {  text-align: left; }
+    .table td.tinytable_css_idap13oxj4hnskrjc3fn9p, .table th.tinytable_css_idap13oxj4hnskrjc3fn9p {  text-align: right; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_1qoyosuzddnx248kb59a" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">Miles / Gallon</th>
+                <th scope="col">Horse Power</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>Miles / Gallon</td>
+                  <td>1.00</td>
+                  <td>-.74</td>
+                </tr>
+                <tr>
+                  <td>Horse Power   </td>
+                  <td>-.74</td>
+                  <td>1.00</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename columns alphabetically and include a footnote for reference</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>note <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"(%s) %s"</span>, letters[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(dat)], <span class="fu">colnames</span>(dat))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>note <span class="ot">&lt;-</span> <span class="fu">paste</span>(note, <span class="at">collapse =</span> <span class="st">"; "</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dat) <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"(%s)"</span>, letters[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(dat)])</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_correlation</span>(dat, <span class="at">notes =</span> note)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_x16c21ki4vc0xs5o0af1(i, j, css_id) {
+        var table = document.getElementById("tinytable_x16c21ki4vc0xs5o0af1");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_x16c21ki4vc0xs5o0af1');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_x16c21ki4vc0xs5o0af1(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_x16c21ki4vc0xs5o0af1");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(0, 0, 'tinytable_css_id0g043poghw1s07ni8fpr') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(0, 1, 'tinytable_css_id9ssyk8cus98mu2d0qdzx') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(0, 2, 'tinytable_css_id9ssyk8cus98mu2d0qdzx') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(1, 0, 'tinytable_css_idv875akp7mt6w1r5l4iap') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(1, 1, 'tinytable_css_idwoev9wu8agpjpt67llyw') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(1, 2, 'tinytable_css_idwoev9wu8agpjpt67llyw') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(2, 0, 'tinytable_css_idv875akp7mt6w1r5l4iap') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(2, 1, 'tinytable_css_idwoev9wu8agpjpt67llyw') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(2, 2, 'tinytable_css_idwoev9wu8agpjpt67llyw') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(3, 0, 'tinytable_css_idv875akp7mt6w1r5l4iap') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(3, 1, 'tinytable_css_idv875akp7mt6w1r5l4iap') })
+window.addEventListener('load', function () { styleCell_x16c21ki4vc0xs5o0af1(3, 2, 'tinytable_css_idv875akp7mt6w1r5l4iap') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_id0g043poghw1s07ni8fpr, .table th.tinytable_css_id0g043poghw1s07ni8fpr {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_id9ssyk8cus98mu2d0qdzx, .table th.tinytable_css_id9ssyk8cus98mu2d0qdzx {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idv875akp7mt6w1r5l4iap, .table th.tinytable_css_idv875akp7mt6w1r5l4iap {  text-align: left; }
+    .table td.tinytable_css_idwoev9wu8agpjpt67llyw, .table th.tinytable_css_idwoev9wu8agpjpt67llyw {  text-align: right; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_x16c21ki4vc0xs5o0af1" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">(a)</th>
+                <th scope="col">(b)</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="3">(a) Miles / Gallon; (b) Horse Power</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td>(a)</td>
+                  <td>1   </td>
+                  <td>.</td>
+                </tr>
+                <tr>
+                  <td>(b)</td>
+                  <td>-.78</td>
+                  <td>1</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `datasummary_correlation_format`: custom function with formatting</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> mtcars[, <span class="fu">c</span>(<span class="st">"mpg"</span>, <span class="st">"hp"</span>, <span class="st">"disp"</span>)]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>cor_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, <span class="at">method =</span> <span class="st">"kendall"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datasummary_correlation_format</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    out,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">fmt =</span> <span class="dv">2</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper_triangle =</span> <span class="st">"x"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">diagonal =</span> <span class="st">"."</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_correlation</span>(dat, <span class="at">method =</span> cor_fun)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_mxzf5ugd2yszb54vbsoy(i, j, css_id) {
+        var table = document.getElementById("tinytable_mxzf5ugd2yszb54vbsoy");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_mxzf5ugd2yszb54vbsoy');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_mxzf5ugd2yszb54vbsoy(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_mxzf5ugd2yszb54vbsoy");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(0, 0, 'tinytable_css_idxy6ez83a7u72a8qnbidn') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(0, 1, 'tinytable_css_idqtvs4cghwf7ifnn3z4ty') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(0, 2, 'tinytable_css_idqtvs4cghwf7ifnn3z4ty') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(0, 3, 'tinytable_css_idqtvs4cghwf7ifnn3z4ty') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(1, 0, 'tinytable_css_idza17ags3126b4z61i4zi') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(1, 1, 'tinytable_css_id5t7yfg11z4wzax8ih0d9') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(1, 2, 'tinytable_css_id5t7yfg11z4wzax8ih0d9') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(1, 3, 'tinytable_css_id5t7yfg11z4wzax8ih0d9') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(2, 0, 'tinytable_css_idza17ags3126b4z61i4zi') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(2, 1, 'tinytable_css_id5t7yfg11z4wzax8ih0d9') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(2, 2, 'tinytable_css_id5t7yfg11z4wzax8ih0d9') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(2, 3, 'tinytable_css_id5t7yfg11z4wzax8ih0d9') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(3, 0, 'tinytable_css_idza17ags3126b4z61i4zi') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(3, 1, 'tinytable_css_id5t7yfg11z4wzax8ih0d9') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(3, 2, 'tinytable_css_id5t7yfg11z4wzax8ih0d9') })
+window.addEventListener('load', function () { styleCell_mxzf5ugd2yszb54vbsoy(3, 3, 'tinytable_css_id5t7yfg11z4wzax8ih0d9') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_idxy6ez83a7u72a8qnbidn, .table th.tinytable_css_idxy6ez83a7u72a8qnbidn {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idqtvs4cghwf7ifnn3z4ty, .table th.tinytable_css_idqtvs4cghwf7ifnn3z4ty {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idza17ags3126b4z61i4zi, .table th.tinytable_css_idza17ags3126b4z61i4zi {  text-align: left; }
+    .table td.tinytable_css_id5t7yfg11z4wzax8ih0d9, .table th.tinytable_css_id5t7yfg11z4wzax8ih0d9 {  text-align: right; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_mxzf5ugd2yszb54vbsoy" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">mpg</th>
+                <th scope="col">hp</th>
+                <th scope="col">disp</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>mpg </td>
+                  <td>.   </td>
+                  <td>x  </td>
+                  <td>x</td>
+                </tr>
+                <tr>
+                  <td>hp  </td>
+                  <td>-.74</td>
+                  <td>.  </td>
+                  <td>x</td>
+                </tr>
+                <tr>
+                  <td>disp</td>
+                  <td>-.77</td>
+                  <td>.67</td>
+                  <td>.</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use kableExtra and psych to color significant cells</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> mtcars[, <span class="fu">c</span>(<span class="st">"vs"</span>, <span class="st">"hp"</span>, <span class="st">"gear"</span>)]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>cor_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(dat) {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># compute correlations and format them</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  correlations <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cor</span>(dat))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  correlations <span class="ot">&lt;-</span> <span class="fu">datasummary_correlation_format</span>(correlations, <span class="at">fmt =</span> <span class="dv">2</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculate pvalues using the `psych` package</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  pvalues <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">corr.test</span>(dat)<span class="sc">$</span>p</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use `kableExtra::cell_spec` to color significant cells</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(correlations)) {</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(correlations)) {</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (pvalues[i, j] <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;&amp;</span> i <span class="sc">!=</span> j) {</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        correlations[i, j] <span class="ot">&lt;-</span> <span class="fu">cell_spec</span>(correlations[i, j], <span class="at">background =</span> <span class="st">"pink"</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(correlations)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co"># The `escape=FALSE` is important here!</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_correlation</span>(dat, <span class="at">method =</span> cor_fun, <span class="at">escape =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_7aiq6bvuo5hb2ery3r1e(i, j, css_id) {
+        var table = document.getElementById("tinytable_7aiq6bvuo5hb2ery3r1e");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_7aiq6bvuo5hb2ery3r1e');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_7aiq6bvuo5hb2ery3r1e(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_7aiq6bvuo5hb2ery3r1e");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(0, 0, 'tinytable_css_id3zs9d627ht8ttqz4to21') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(0, 1, 'tinytable_css_iddniqn6qspguuog3ws5gi') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(0, 2, 'tinytable_css_iddniqn6qspguuog3ws5gi') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(0, 3, 'tinytable_css_iddniqn6qspguuog3ws5gi') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(1, 0, 'tinytable_css_idh0la1qvebv8hp7vq0jl2') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(1, 1, 'tinytable_css_idqvjq8kmybpbqt5hh2trx') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(1, 2, 'tinytable_css_idqvjq8kmybpbqt5hh2trx') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(1, 3, 'tinytable_css_idqvjq8kmybpbqt5hh2trx') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(2, 0, 'tinytable_css_idh0la1qvebv8hp7vq0jl2') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(2, 1, 'tinytable_css_idqvjq8kmybpbqt5hh2trx') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(2, 2, 'tinytable_css_idqvjq8kmybpbqt5hh2trx') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(2, 3, 'tinytable_css_idqvjq8kmybpbqt5hh2trx') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(3, 0, 'tinytable_css_idh0la1qvebv8hp7vq0jl2') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(3, 1, 'tinytable_css_idqvjq8kmybpbqt5hh2trx') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(3, 2, 'tinytable_css_idqvjq8kmybpbqt5hh2trx') })
+window.addEventListener('load', function () { styleCell_7aiq6bvuo5hb2ery3r1e(3, 3, 'tinytable_css_idqvjq8kmybpbqt5hh2trx') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_id3zs9d627ht8ttqz4to21, .table th.tinytable_css_id3zs9d627ht8ttqz4to21 {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_iddniqn6qspguuog3ws5gi, .table th.tinytable_css_iddniqn6qspguuog3ws5gi {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idh0la1qvebv8hp7vq0jl2, .table th.tinytable_css_idh0la1qvebv8hp7vq0jl2 {  text-align: left; }
+    .table td.tinytable_css_idqvjq8kmybpbqt5hh2trx, .table th.tinytable_css_idqvjq8kmybpbqt5hh2trx {  text-align: right; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_7aiq6bvuo5hb2ery3r1e" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">vs</th>
+                <th scope="col">hp</th>
+                <th scope="col">gear</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>vs  </td>
+                  <td>1.00                                                                                                                         </td>
+                  <td><span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: pink !important;">-.72</span></td>
+                  <td>.21 </td>
+                </tr>
+                <tr>
+                  <td>hp  </td>
+                  <td><span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: pink !important;">-.72</span></td>
+                  <td>1.00                                                                                                                         </td>
+                  <td>-.13</td>
+                </tr>
+                <tr>
+                  <td>gear</td>
+                  <td>.21                                                                                                                          </td>
+                  <td>-.13                                                                                                                         </td>
+                  <td>1.00</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../man/datasummary_crosstab.html" class="pagination-link" aria-label="`datasummary_crosstab`">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><code>datasummary_crosstab</code></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../man/fmt_decimal.html" class="pagination-link" aria-label="`fmt_decimal`">
+        <span class="nav-page-text"><code>fmt_decimal</code></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
